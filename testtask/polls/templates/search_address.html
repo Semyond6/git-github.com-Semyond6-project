@@ -6,10 +6,7 @@
 <form  method="post" enctype="multipart/form-data">
 {% csrf_token %}
   {{ addressandredius_form.as_p }}
-  <input type="submit">
+  <button type=«submit» class=«save btn btn-default»>Поиск</button>
 </form>
-  <body>
-  Hello, OpenStreetMap!
-  <div>{% include "geomap/common.html" %}</div>
-  </body>
+
 {% endblock %}

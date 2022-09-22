@@ -6,10 +6,18 @@
     {% block header %} {% endblock %}
 </head>
 <body>
-<a href="{% url 'home' %}">Home</a>
-<a href="{% url 'downloadCSV' %}"> Загрузка .csv</a><br>
-<a href="{% url 'search' %}"> Поиск адреса</a><br>
-{% block content %} {% endblock %}
+    <aside>
+        <nav>
+            <ul class="aside-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                {% block content %}
+                <li><a href="{% url 'downloadCSV' %}">Загрузка .csv</a></li>
+                <li><a href="{% url 'search' %}">Поиск адреса</a></li>
+                {% endblock %}
+            </ul>
+        </nav>
+        </aside>
 </body>
+
 </html>
 {% block footer %} {% endblock %}

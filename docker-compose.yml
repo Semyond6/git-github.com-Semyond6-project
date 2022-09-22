@@ -1,0 +1,32 @@
+version: '3'
+
+volumes:
+  objects_db:
+    external: true
+
+services:
+  db:
+    image: postgres
+    command: "-c logging_collector=on"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1qazxcvb
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+
+
+  backend:
+    container_name: backend
+    build: ./
+    command: bash -c "cd backend/ && python testtask/manage.py migrate && python testtask/manage.py makemigrations && python testtask/manage.py runserver  0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1qazxcvb
+      - POSTGRES_DB=postgres
+    depends_on:
+      - db

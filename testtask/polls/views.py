@@ -9,6 +9,9 @@ from django_admin_geomap import geomap_context
 from .models import Subjects
 from .proccessing import uploaded_file, address_verification
 
+DADA_TOKEN = None
+DADA_SECRET = None
+
 def Home(request):
     return render(request, 'home.html')
 
@@ -36,8 +39,10 @@ class SearchAddress(View):
     def post(self, request):
         form = AddressForm(request.POST)
         if form.is_valid():
-            address_list = address_verification(form.data['address'], int(form.data['radius']))
-            return render(request, 'search_address.html', geomap_context(address_list))
+            DADA_TOKEN = form.data['data_token']
+            DADA_SECRET = form.data['data_secret']
+            address_list = address_verification(form.data['address'], int(form.data['radius']), DADA_TOKEN, DADA_SECRET)
+            return render(request, 'map.html', geomap_context(address_list))
         else:
             form = AddressForm()
             return render(request, 'search_address.html', {'form': form})

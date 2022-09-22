@@ -1,9 +1,11 @@
 import csv
 import io
+
 from dadata import Dadata
-from .models import Subjects, HistorySeartch
-from testtask.settings import DADA_SECRET, DADA_TOKEN
 from geopy import distance
+
+from .models import HistorySeartch, Subjects
+
 
 def uploaded_file(file):
     csv_file = file.read().decode('utf-8')
@@ -47,7 +49,7 @@ def update_history_seartch(address):
     last_entry = HistorySeartch.objects.latest('id')
     return last_entry
 
-def address_verification(address_form, radius):
+def address_verification(address_form, radius, DADA_TOKEN, DADA_SECRET):
     dadata = Dadata(DADA_TOKEN, DADA_SECRET)
     dadata_address = dadata.clean(name="address", source=address_form)
     center_point = (float(dadata_address['geo_lat']), float(dadata_address['geo_lon']))
